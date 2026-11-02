@@ -1,0 +1,53 @@
+### Build output ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+build/
+*.log
+HELP.md
+
+### Secrets / local environment ###
+# Real credentials live in .env; only the template is committed
+.env
+.env.*
+!.env.example
+
+### Local notes (needed on this machine, not in the repo) ###
+GIT_COMMIT_MANUAL.md
+
+### AI assistant local settings ###
+.claude/
+CLAUDE.local.md
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db
+desktop.ini
