@@ -1,0 +1,157 @@
+/* Make the "hidden" attribute win over display rules below */
+[hidden] {
+    display: none !important;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: #1e3a8a;
+    color: #fff;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+#user-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+main {
+    max-width: 900px;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.login {
+    max-width: 360px;
+    margin: 3rem auto;
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.login label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.entity-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.entity-form h3 {
+    width: 100%;
+    margin: 0;
+    font-size: 1rem;
+}
+
+input {
+    padding: 0.45rem 0.6rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+button {
+    padding: 0.45rem 0.9rem;
+    border: none;
+    border-radius: 4px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button.secondary {
+    background: #6b7280;
+}
+
+button.danger {
+    background: #dc2626;
+}
+
+td button {
+    margin-right: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.85rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    background: #f9fafb;
+}
+
+/* Students only view data, so they get no Actions column */
+.read-only .actions-col {
+    display: none;
+}
+
+.error {
+    color: #dc2626;
+    margin: 0;
+}
+
+.error:empty {
+    display: none;
+}
+
+#app-view > .error {
+    background: #fee2e2;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.hint {
+    color: #6b7280;
+    font-size: 0.85rem;
+}

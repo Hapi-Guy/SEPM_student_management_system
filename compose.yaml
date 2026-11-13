@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: sms-postgres
+    environment:
+      POSTGRES_DB: smsdb
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASS:-admin}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # The app waits for this check so it doesn't start before the DB accepts connections
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    container_name: sms-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/smsdb
+      DB_USER: ${DB_USER:-admin}
+      DB_PASS: ${DB_PASS:-admin}
+    # Host port 8081 because XAMPP's Tomcat already uses 8080 on this machine
+    ports:
+      - "8081:8080"
+
+volumes:
+  pgdata:

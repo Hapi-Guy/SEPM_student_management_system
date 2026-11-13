@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>Student Management System</h1>
+    <div id="user-bar" hidden>
+        <span id="user-info"></span>
+        <button id="logout-btn" type="button">Logout</button>
+    </div>
+</header>
+
+<main>
+    <section id="login-view" class="card login">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label>Username <input name="username" required autocomplete="username"></label>
+            <label>Password <input name="password" type="password" required autocomplete="current-password"></label>
+            <button type="submit">Login</button>
+            <p id="login-error" class="error"></p>
+        </form>
+        <!-- <p class="hint">Demo accounts: admin / admin123 &middot; teacher / teacher123 &middot; student / student123</p> -->
+    </section>
+
+    <div id="app-view" hidden>
+        <p id="message" class="error"></p>
+
+        <!-- data-roles: which roles can see the section -->
+        <section class="card entity-section" data-endpoint="/api/students" data-label="Student"
+                 data-roles="STUDENT TEACHER ADMIN">
+            <h2>Students</h2>
+            <form class="entity-form">
+                <h3 class="form-title"></h3>
+                <input type="hidden" name="id">
+                <input name="name" placeholder="Name" required>
+                <input name="department" placeholder="Department" required>
+                <button type="submit">Save</button>
+                <button type="button" class="cancel-btn secondary">Cancel</button>
+            </form>
+            <table>
+                <thead>
+                <tr><th>ID</th><th>Name</th><th>Department</th><th class="actions-col">Actions</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <section class="card entity-section" data-endpoint="/api/teachers" data-label="Teacher"
+                 data-roles="TEACHER ADMIN">
+            <h2>Teachers</h2>
+            <form class="entity-form">
+                <h3 class="form-title"></h3>
+                <input type="hidden" name="id">
+                <input name="name" placeholder="Name" required>
+                <input name="department" placeholder="Department" required>
+                <button type="submit">Save</button>
+                <button type="button" class="cancel-btn secondary">Cancel</button>
+            </form>
+            <table>
+                <thead>
+                <tr><th>ID</th><th>Name</th><th>Department</th><th class="actions-col">Actions</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </div>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
