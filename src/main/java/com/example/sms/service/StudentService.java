@@ -37,7 +37,7 @@ public class StudentService {
     public StudentDTO updateStudent(Long id, StudentDTO studentDTO) {
         Student student = findStudent(id);
         student.setName(studentDTO.getName());
-        student.setDepartment(studentDTO.getDepartment());
+        student.setDepartment(studentDTO.getName());
         return toDTO(studentRepository.save(student));
     }
 
