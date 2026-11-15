@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Unit and integration tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # Integration tests use an in-memory H2 database, so no PostgreSQL service is needed
+      - name: Run tests
+        run: mvn -B clean verify
+
+      # Shows a pass/fail table for every test on the run's Summary page
+      - name: Write test summary
+        if: always()
+        run: |
+          echo "## Test results" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Test class | Tests | Failures | Errors | Skipped |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          for f in target/surefire-reports/TEST-*.xml; do
+            [ -e "$f" ] || continue
+            name=$(grep -o -m1 'testsuite [^>]*name="[^"]*"' "$f" | sed 's/.* name="\([^"]*\)".*/\1/')
+            tests=$(grep -o -m1 'tests="[0-9]*"' "$f" | grep -o '[0-9]*')
+            failures=$(grep -o -m1 'failures="[0-9]*"' "$f" | grep -o '[0-9]*')
+            errors=$(grep -o -m1 'errors="[0-9]*"' "$f" | grep -o '[0-9]*')
+            skipped=$(grep -o -m1 'skipped="[0-9]*"' "$f" | grep -o '[0-9]*')
+            echo "| ${name##*.} | $tests | $failures | $errors | $skipped |" >> "$GITHUB_STEP_SUMMARY"
+          done
+
+      # Full reports (including stack traces of failed tests) downloadable from the run page
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: target/surefire-reports/
+          if-no-files-found: ignore
+
+  docker:
+    name: Docker image builds
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t student-management-system .
