@@ -37,6 +37,7 @@ class StudentServiceTest {
         studentService = new StudentService(studentRepository, new ModelMapper());
     }
 
+    // Looking up an existing id returns that student's data as a DTO
     @Test
     void getStudentById_returnsStudent_whenIdExists() {
         when(studentRepository.findById(1L)).thenReturn(Optional.of(new Student(1L, "Rahim Uddin", "CSE")));
@@ -48,6 +49,7 @@ class StudentServiceTest {
         assertThat(result.getDepartment()).isEqualTo("CSE");
     }
 
+    // A client-supplied id is discarded so the database always assigns a new one
     @Test
     void createStudent_ignoresIdSentByClient() {
         // like the real database: return a copy with a generated id
@@ -64,6 +66,7 @@ class StudentServiceTest {
         assertThat(result.getId()).isEqualTo(10L);
     }
 
+    // Updating copies both the new name and the new department onto the student
     @Test
     void updateStudent_changesNameAndDepartment() {
         when(studentRepository.findById(1L)).thenReturn(Optional.of(new Student(1L, "Rahim Uddin", "CSE")));
@@ -75,6 +78,7 @@ class StudentServiceTest {
         assertThat(result.getDepartment()).isEqualTo("EEE");
     }
 
+    // Deleting an unknown id throws 404-style ResourceNotFoundException and deletes nothing
     @Test
     void deleteStudent_throwsNotFound_whenIdDoesNotExist() {
         when(studentRepository.findById(99L)).thenReturn(Optional.empty());
