@@ -101,7 +101,7 @@ src/test/resources
 |---|---|:-:|---|
 | Unit | `StudentServiceTest` | 4 | get by id, create ignores client id, update, delete unknown id |
 | Unit | `TeacherServiceTest` | 2 | list all, get unknown id |
-| Integration | `RoleAccessIntegrationTest` | 3 | 401 without login, student can't see teachers, only admin can add students |
+| Integration | `RoleAccessIntegrationTest` | 3 | one end-to-end walk-through per role: admin (full add/view/edit/delete lifecycle, 400 and 404 errors), teacher (view and edit, but add/remove refused), student and anonymous user (public frontend, 401 login errors, read-only student access) |
 
 Unit tests mock the repository with Mockito. Integration tests start the whole app against an in-memory H2 database, so PostgreSQL isn't needed:
 
