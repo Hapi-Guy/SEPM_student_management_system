@@ -35,6 +35,7 @@ class TeacherServiceTest {
         teacherService = new TeacherService(teacherRepository, new ModelMapper());
     }
 
+    // Listing teachers returns every teacher in id order, converted to DTOs
     @Test
     void getAllTeachers_mapsEveryTeacherToDto() {
         when(teacherRepository.findAll(Sort.by("id"))).thenReturn(List.of(
@@ -47,6 +48,7 @@ class TeacherServiceTest {
                 .containsExactly("Dr. Ayesha Rahman", "Prof. Tanvir Ahmed");
     }
 
+    // Looking up an unknown teacher id throws ResourceNotFoundException with a clear message
     @Test
     void getTeacherById_throwsNotFound_whenIdDoesNotExist() {
         when(teacherRepository.findById(42L)).thenReturn(Optional.empty());
